@@ -1,0 +1,181 @@
+UC1) Ability to create a Address Book Service DB
+
+
+mysql> CREATE DATABASE AddressBook_Service;
+Query OK, 1 row affected (0.15 sec)
+
+mysql> show databases;
++---------------------+
+| Database            |
++---------------------+
+| addressbook_service |
+| bridgelabz          |
+| information_schema  |
+| mysql               |
+| performance_schema  |
+| sakila              |
+| sys                 |
+| world               |
++---------------------+
+8 rows in set (0.00 sec)
+
+mysql> use addressbook_service;
+Database changed
+
+===============================================================
+UC2) Ability to create a Address Book Table with first and last names, address, city, state, zip, phone number and email as its attributes
+
+mysql> create table addressbook(FirstName varchar(255) not null, LastName varchar(255) not null, Address varchar(255), City varchar(255), State varchar (255), Zip double not null, PhoneNUmber double not null, Email  varchar(255));
+Query OK, 0 rows affected (1.39 sec)
+
+mysql> select * from addressbook;
+Empty set (0.04 sec)
+
+mysql> desc addressbook;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| FirstName   | varchar(255) | NO   |     | NULL    |       |
+| LastName    | varchar(255) | NO   |     | NULL    |       |
+| Address     | varchar(255) | YES  |     | NULL    |       |
+| City        | varchar(255) | YES  |     | NULL    |       |
+| State       | varchar(255) | YES  |     | NULL    |       |
+| Zip         | double       | NO   |     | NULL    |       |
+| PhoneNUmber | double       | NO   |     | NULL    |       |
+| Email       | varchar(255) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+==================================================================================
+UC3) Ability to insert new Contacts to Address Book
+
+mysql> insert into addressbook(FirstName,LastName,Address,City,State,Zip,PhoneNUmber,Email) values("Abhijeet","Kale","GokulDham","Nagpur","Maharashtra",440030,9423628329,"abhijeetkale786@gmail.com");
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from addressbook;
++-----------+----------+-----------+--------+-------------+--------+-------------+---------------------------+
+| FirstName | LastName | Address   | City   | State       | Zip    | PhoneNUmber | Email                     |
++-----------+----------+-----------+--------+-------------+--------+-------------+---------------------------+
+| Abhijeet  | Kale     | GokulDham | Nagpur | Maharashtra | 440030 |  9423628329 | abhijeetkale786@gmail.com |
++-----------+----------+-----------+--------+-------------+--------+-------------+---------------------------+
+1 row in set (0.05 sec
+
+mysql> insert into addressbook(FirstName,LastName,Address,City,State,Zip,PhoneNUmber,Email) values("Swapnil","Kapse","Takli","Nagpur","Maharashtra",440020,9865321476,"swapnil123@gmail.com"),("Shivam","Satpute","Itwari","Nashik","Maharshtra",440056,7722542369,"shivan156@gmail.com"),("Vyanky","Pachpohor","Gorewada","Katol","Kerala",662532,8823657925,"vyanky99@gmail.com")
+    -> ;
+Query OK, 3 rows affected (0.39 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+mysql> select * from addressbook;
++-----------+-----------+-----------+--------+-------------+--------+-------------+---------------------------+
+| FirstName | LastName  | Address   | City   | State       | Zip    | PhoneNUmber | Email                     |
++-----------+-----------+-----------+--------+-------------+--------+-------------+---------------------------+
+| Abhijeet  | Kale      | GokulDham | Nagpur | Maharashtra | 440030 |  9423628329 | abhijeetkale786@gmail.com |
+| Swapnil   | Kapse     | Takli     | Nagpur | Maharashtra | 440020 |  9865321476 | swapnil123@gmail.com      |
+| Shivam    | Satpute   | Itwari    | Nashik | Maharshtra  | 440056 |  7722542369 | shivan156@gmail.com       |
+| Vyanky    | Pachpohor | Gorewada  | Katol  | Kerala      | 662532 |  8823657925 | vyanky99@gmail.com        |
++-----------+-----------+-----------+--------+-------------+--------+-------------+---------------------------+
+4 rows in set (0.00 sec)
+
+====================================================================================================================
+UC4) Ability to edit existing contact person using their name
+
+mysql> UPDATE addressbook
+    -> SET LastName='Gupta'
+    -> WHERE FirstName='Vyanky'
+    -> ;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+-----------+--------+-------------+--------+-------------+---------------------------+
+| FirstName | LastName | Address   | City   | State       | Zip    | PhoneNUmber | Email                     |
++-----------+----------+-----------+--------+-------------+--------+-------------+---------------------------+
+| Abhijeet  | Kale     | GokulDham | Nagpur | Maharashtra | 440030 |  9423628329 | abhijeetkale786@gmail.com |
+| Swapnil   | Kapse    | Takli     | Nagpur | Maharashtra | 440020 |  9865321476 | swapnil123@gmail.com      |
+| Shivam    | Satpute  | Itwari    | Nashik | Maharshtra  | 440056 |  7722542369 | shivan156@gmail.com       |
+| Vyanky    | Gupta    | Gorewada  | Katol  | Kerala      | 662532 |  8823657925 | vyanky99@gmail.com        |
++-----------+----------+-----------+--------+-------------+--------+-------------+---------------------------+
+4 rows in set (0.02 sec)
+
+
+
+mysql> UPDATE addressbook
+    -> SET
+    ->     lastname = 'Hill',
+    ->     email = 'mary.hill@classicmodelcars.com'
+    -> WHERE
+    ->     FirstName ='Vyanky';
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+-----------+--------+-------------+--------+-------------+--------------------------------+
+| FirstName | LastName | Address   | City   | State       | Zip    | PhoneNUmber | Email                          |
++-----------+----------+-----------+--------+-------------+--------+-------------+--------------------------------+
+| Abhijeet  | Kale     | GokulDham | Nagpur | Maharashtra | 440030 |  9423628329 | abhijeetkale786@gmail.com      |
+| Swapnil   | Kapse    | Takli     | Nagpur | Maharashtra | 440020 |  9865321476 | swapnil123@gmail.com           |
+| Shivam    | Satpute  | Itwari    | Nashik | Maharshtra  | 440056 |  7722542369 | shivan156@gmail.com            |
+| Vyanky    | Hill     | Gorewada  | Katol  | Kerala      | 662532 |  8823657925 | mary.hill@classicmodelcars.com |
++-----------+----------+-----------+--------+-------------+--------+-------------+--------------------------------+
+4 rows in set (0.06 sec)
+
+
+===================================================================================================
+UC5)Ability to delete a person using person's name
+
+mysql> DELETE FROM addressbook Where firstname='Vyanky';
+Query OK, 1 row affected (0.15 sec)
+
+mysql> select * from addressbook;
++-----------+----------+-----------+--------+-------------+--------+-------------+---------------------------+
+| FirstName | LastName | Address   | City   | State       | Zip    | PhoneNUmber | Email                     |
++-----------+----------+-----------+--------+-------------+--------+-------------+---------------------------+
+| Abhijeet  | Kale     | GokulDham | Nagpur | Maharashtra | 440030 |  9423628329 | abhijeetkale786@gmail.com |
+| Swapnil   | Kapse    | Takli     | Nagpur | Maharashtra | 440020 |  9865321476 | swapnil123@gmail.com      |
+| Shivam    | Satpute  | Itwari    | Nashik | Maharshtra  | 440056 |  7722542369 | shivan156@gmail.com       |
++-----------+----------+-----------+--------+-------------+--------+-------------+---------------------------+
+3 rows in set (0.03 sec)
+
+====================================================================================================
+UC6) Ability to Retrieve Person belonging to a City or State from the Address Book  
+
+
+mysql> SELECT firstname from addressbook where City='NAGPUR';
++-----------+
+| firstname |
++-----------+
+| Abhijeet  |
+| Swapnil   |
++-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT firstname from addressbook where State='Maharashtra';
++-----------+
+| firstname |
++-----------+
+| Abhijeet  |
+| Swapnil   |
++-----------+
+2 rows in set (0.00 sec)
+
+=====================================================================================================
+UC7) Ability to understand the size of address book by City and State
+
+
+mysql> SELECT COUNT(*) AS City FROM addressbook;
++------+
+| City |
++------+
+|    3 |
++------+
+1 row in set (0.04 sec)
+
+
+mysql> SELECT COUNT(*) AS State FROM addressbook;
++-------+
+| State |
++-------+
+|     3 |
++-------+
+1 row in set (0.00 sec)
